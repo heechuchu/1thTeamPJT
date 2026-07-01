@@ -1,0 +1,76 @@
+{% include 'include/header.html' %}
+{% include 'include/nav.html' %}
+
+<main class="logs-container">
+
+    <h2>사고 이력</h2>
+
+        <section class="filter-box">
+
+            <a href="{{ url_for('dashboard.logs') }}"
+            class="filter-btn {% if selected_type == 'all' %}active{% endif %}">
+                전체
+            </a>
+
+            <a href="{{ url_for('dashboard.logs') }}?type=intrusion"
+            class="filter-btn {% if selected_type == 'intrusion' %}active{% endif %}">
+                침입
+            </a>
+
+            <a href="{{ url_for('dashboard.logs') }}?type=drowning"
+            class="filter-btn {% if selected_type == 'drowning' %}active{% endif %}">
+                익수
+            </a>
+
+            <a href="{{ url_for('dashboard.logs') }}?type=rescue"
+            class="filter-btn {% if selected_type == 'rescue' %}active{% endif %}">
+                구조요청
+            </a>
+
+    </section>
+
+    <section class="logs-box">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>번호</th>
+                    <th>발생 시간</th>
+                    <th>감지 유형</th>
+                    <th>위험 위치</th>
+                    <th>상태</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for log in logs %}
+
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ log.time }}</td>
+                    <td>{{ log.type_name }}</td>
+                    <td>{{ log.location }}</td>
+                    <td>{{ log.status }}</td>
+                </tr>
+
+                {% else %}
+
+                <tr>
+                    <td colspan="5" class="empty-log">
+                        사고 이력이 없습니다.
+                    </td>
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</main>
+
+{% include 'include/footer.html' %}
